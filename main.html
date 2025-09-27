@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WordPress</title>
     <link rel="stylesheet" href="main.css">
-    <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.min.js"></script>
 </head>
 <body>
     <div id="whole">
-        <div id="header"></div>
-        <div id="funcbody">
-             <textarea id="press" placeholder="Start typing..."></textarea>
+        <div id="header">
+          <button id="bold">bold</button>
+          <button id="italic">italic</button>
+          <button id="underline">underline</button>
         </div>
-        <div id="footer"></div>
+        <div id="funcbody">
+            <div id="press" contenteditable="true" placeholder="Start typing..."></div>
+        </div>
     </div>
-    <script src="word.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
