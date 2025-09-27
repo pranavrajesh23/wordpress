@@ -1,14 +1,25 @@
-#header{
-    background-color: blueviolet;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    /* justify-content: center; */
-    align-items: center;
-    gap: 10px;
+#header {
+  display: flex;
+  flex-wrap: wrap;   /* allows wrapping instead of overflow */
+  gap: 6px;          /* space between buttons/inputs */
+  margin-bottom: 10px;
+  align-items: center;
+  justify-content: start;
+  background-color: burlywood;
 }
+
+#header button,
+#header select,
+#header input[type="color"],
+#header input[type="number"],
+#header input[type="file"] {
+  padding: 5px 8px;
+  font-size: 14px;
+  flex-shrink: 0;    /* prevents elements from shrinking too small */
+}
+
 button{
-    height: 20px;
+    height: 30px;
 }
 #funcbody{
     /* background-color: burlywood; */
@@ -24,4 +35,18 @@ button{
     overflow-wrap: break-word;
     height: inherit;
     width: inherit;
+    color: black;           /* Make sure text is visible */
+    background-color: white;/* Ensure contrast for the cursor */
+    caret-color: black;
+}
+
+#press table {
+  border: 1px solid #333;
+  border-collapse: collapse;
+  width: 100%;
+}
+#press td {
+  border: 1px solid #333;
+  padding: 5px;
+  min-width: 50px;
 }

@@ -12,11 +12,53 @@
           <button id="bold">bold</button>
           <button id="italic">italic</button>
           <button id="underline">underline</button>
+
+          <input type="number" id="fsize" placeholder="Enter Size"/>
+
+          <select id="fontfamily">
+                <option value="Arial, sans-serif">Arial</option>
+                <option value="'Times New Roman', serif">Times New Roman</option>
+                <option value="'Courier New', monospace">Courier New</option>
+          </select>
+
+          <button id="left">Left</button>
+          <button id="center">Center</button>
+          <button id="right">Right</button>
+          <button id="justify">Justify</button>
+
+          <input type="color" id="textcolor" title="Text Color">
+
+          <input type="color" id="highlight" title="Highlight Color">
+
+          <button id="olist">Ordered List</button>
+          <button id="ulist">Unordered List</button>
+
+          <button id="link">Insert Link</button>
+
+          <input type="file" id="imageUpload" accept="image/*" style="display:none;">
+          <button id="imageLocal">Insert Local Image</button>
+
+          <button id="image">Insert Image</button>
+
+          <button id="table">Insert Table</button>
+
+          <input type="text" id="docTitle" placeholder="Enter Title">
+          <input type="text" id="docAuthor" placeholder="Enter Author">
+
+          <button id="exportHTML">Export HTML</button>
+          <button id="exportDOCX">Export DOCX</button>
+          <button id="exportPDF">Export PDF</button>
+
         </div>
         <div id="funcbody">
-            <div id="press" contenteditable="true" placeholder="Start typing..."></div>
+            <div id="press" contenteditable="true" ><br></div>
         </div>
     </div>
+<script src="https://cdn.jsdelivr.net/npm/html-docx-js/dist/html-docx.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.0.0/docx.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <script src="main.js"></script>
 </body>
 </html>
