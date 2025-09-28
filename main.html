@@ -26,16 +26,6 @@
                     <option value="6">Extra Large</option>
                     <option value="7">Big</option>
           </select>
-          <select id="fsize">
-            <option value="12">12 px</option>
-            <option value="14">14 px</option>
-            <option value="16" selected>16 px</option>
-            <option value="18">18 px</option>
-            <option value="24">24 px</option>
-            <option value="32">32 px</option>
-            <option value="48">48 px</option>
-            <option value="72">72 px</option>
-          </select>
 
           <select id="fontfamily" onchange="formatdoc('fontName', this.value); this.selectedIndex=0">
                 <option value="Arial, sans-serif">Arial</option>
@@ -68,14 +58,23 @@
 
           <input type="text" id="docTitle" placeholder="Enter Title">
           <input type="text" id="docAuthor" placeholder="Enter Author">
-
+          <button id="resetBtn">Reset</button>
+          <button id="previewBtn">Preview</button>
           <button id="exportHTML">Export HTML</button>
           <button id="exportDOCX">Export DOCX</button>
           <button id="exportPDF">Export PDF</button>
 
+          <input type="file" id="openFileInput" accept=".txt,.html,.docx,.pdf" style="display:none;">
+          <button id="openFileBtn">Open File</button>
         </div>
         <div id="funcbody">
             <div id="press" contenteditable="true" ><br></div>
+        </div>
+        <div id="previewModal">
+          <div id="previewContent">
+            <span id="closePreview">&times;</span>
+            <div id="previewBody"></div>
+          </div>
         </div>
     </div>
 <!-- <script src="https://cdn.jsdelivr.net/npm/html-docx-js/dist/html-docx.min.js"></script>
@@ -89,6 +88,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.8.162/pdf.min.js"></script>
+
 <script src="main.js"></script>
 
 </body>
