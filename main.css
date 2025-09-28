@@ -1,10 +1,10 @@
 #header {
   display: flex;
-  flex-wrap: wrap;   /* allows wrapping instead of overflow */
-  gap: 6px;          /* space between buttons/inputs */
+  flex-wrap: wrap;
+  gap: 6px;
   margin-bottom: 10px;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   background-color: burlywood;
 }
 
@@ -15,29 +15,33 @@
 #header input[type="file"] {
   padding: 5px 8px;
   font-size: 14px;
-  flex-shrink: 0;    /* prevents elements from shrinking too small */
+  flex-shrink: 0;
+  cursor: pointer;
 }
 
-button{
-    height: 30px;
+button {
+  height: 30px;
 }
-#funcbody{
-    /* background-color: burlywood; */
-    width: 100%;
-    height: 480px;
-    display: flex;
-    justify-content: center;
+
+#funcbody {
+  width: 100%;
+  height: 480px;
+  display: flex;
+  justify-content: center;
 }
-#press{
-    /* border: 1px solid #ccc; */
-    /* padding: 10px; */
-    /* width: 98%; */
-    overflow-wrap: break-word;
-    height: inherit;
-    width: inherit;
-    color: black;           /* Make sure text is visible */
-    background-color: white;/* Ensure contrast for the cursor */
-    caret-color: black;
+
+#press {
+  overflow-wrap: break-word;
+  height: 100%;             /* safer than inherit */
+  width: 100%;
+  color: black;
+  background-color: white;
+  caret-color: black;
+  min-height: 400px;
+  padding: 10px;
+  outline: none;
+  white-space: pre-wrap;
+  font-size: 16px;          /* Default size */
 }
 
 #press table {
@@ -53,17 +57,8 @@ button{
   text-align: center;
 }
 
-/* Prevent blue highlight/border around images in contenteditable */
-#press {
-  min-height: 400px;
-  padding: 10px;
-  outline: none;
-  white-space: pre-wrap;
-}
-
 #press * {
-  border: none !important; 
-  outline: none !important;
+  outline: none !important; /* don’t kill borders */
 }
 
 #press img {
@@ -73,7 +68,7 @@ button{
   margin: 5px;
 }
 
-
-#press {
-  font-size: 16px; /* Default size */
+/* Toolbar link button */
+#link {
+  cursor: pointer;
 }

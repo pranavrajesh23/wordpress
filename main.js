@@ -2,58 +2,30 @@ const editor=document.getElementById("press")
 let savedSelection = null;
 editor.style.fontSize = "16px";
 
-document.getElementById('bold').addEventListener('click', () => {
-  editor.focus(); 
-  document.execCommand('bold', false, null);
-});
-document.getElementById('italic').addEventListener('click', () => {
-  editor.focus(); 
-  document.execCommand('italic', false, null);
-}); 
-document.getElementById('underline').addEventListener('click', () => {
-  editor.focus(); 
-  document.execCommand('underline', false, null);
-}); 
-
-document.getElementById("fontfamily").addEventListener("change", function() {
-  editor.focus();
-  document.execCommand("fontName", false, this.value);
-});
-
-document.getElementById("left").addEventListener("click", () => { editor.focus(); document.execCommand("justifyLeft"); });
-document.getElementById("center").addEventListener("click", () => { editor.focus(); document.execCommand("justifyCenter"); });
-document.getElementById("right").addEventListener("click", () => { editor.focus(); document.execCommand("justifyRight"); });
-document.getElementById("justify").addEventListener("click", () => { editor.focus(); document.execCommand("justifyFull"); });
-
-document.getElementById("textcolor").addEventListener("change", function() {
-  editor.focus();
-  document.execCommand("foreColor", false, this.value);
-});
-
-document.getElementById("highlight").addEventListener("change", function() {
-  editor.focus();
-  document.execCommand("hiliteColor", false, this.value);
-});
-
-document.getElementById("olist").addEventListener("click", () => {
-    editor.focus();
+function formatdoc(cmd, value = null) {
+    editor.focus()
     restoreSavedSelection()
-    document.execCommand("insertOrderedList");
-});
-
-document.getElementById("ulist").addEventListener("click", () => {
-    editor.focus();
-    restoreSavedSelection
-    document.execCommand("insertUnorderedList");
-});
-
-// Insert hyperlink
-document.getElementById("link").addEventListener("click", () => {
-  const url = prompt("Enter the URL:");
-  if (url) {
-    editor.focus();
-    document.execCommand("createLink", false, url);
-  }
+    if (value) {
+        document.execCommand(cmd, false, value);
+    } else {
+        document.execCommand(cmd);
+    }
+}
+function addlink() {
+    const url = prompt('Insert URL');
+    if (url) formatdoc('createLink', url);
+}
+editor.addEventListener('mouseenter', function () {
+    const a = editor.querySelectorAll('a');
+    a.forEach(item => {
+        item.addEventListener('mouseenter', function () {
+            editor.setAttribute('contenteditable', false);
+            item.target = '_blank';
+        });
+        item.addEventListener('mouseleave', function () {
+            editor.setAttribute('contenteditable', true);
+        });
+    });
 });
 
 // Insert table
@@ -203,11 +175,6 @@ document.getElementById("exportPDF").addEventListener("click", () => {
 });
 
 /* ========== FONT SIZE (robust) ========== */
-// global variables to store editor & saved selection
-
-
-// Make sure editor has a default font-size
-
 
 // Save selection whenever it changes (only if inside editor)
 document.addEventListener("selectionchange", () => {
@@ -235,10 +202,7 @@ function restoreSavedSelection() {
   return false;
 }
 
-/**
- * Apply font-size (px) to current selection or caret.
- * @param {number|string} px - pixel size (e.g. "18" or 18)
- */
+
 function applyFontSize(px) {
   if (!px) return;
   px = String(px);
@@ -339,7 +303,3 @@ document.addEventListener("selectionchange", () => {
     detectAndSetDropdownFontSize();
   }
 });
-
-
-
-

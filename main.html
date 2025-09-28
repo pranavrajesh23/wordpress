@@ -4,15 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WordPress</title>
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
     <div id="whole">
         <div id="header">
-          <button id="bold">bold</button>
-          <button id="italic">italic</button>
-          <button id="underline">underline</button>
-
+          <button id="bold" onclick="formatdoc('bold')" title="bold">bold</button>
+          <button id="italic" onclick="formatdoc('italic')">italic</button>
+          <button id="underline" onclick="formatdoc('underline')">underline</button>
+          <button onclick="formatdoc('undo')" title="Undo"><i class='bx  bx-undo'  ></i> </button>
+          <button onclick="formatdoc('redo')" title="Redo"><i class='bx  bx-redo'  ></i> </button>
+          <button onclick="formatdoc('strikeThrough')" title="Strikethrough"><i class='bx  bx-strikethrough'  ></i> </button>
+          <select id="fsizee" onchange="formatdoc('fontsize', this.value); this.selectedIndex=0">
+                    <option value="" selected="" hidden="" disabled="">Font size</option>
+                    <option value="1">Extra small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Regular</option>
+                    <option value="4">Medium</option>
+                    <option value="5">Large</option>
+                    <option value="6">Extra Large</option>
+                    <option value="7">Big</option>
+          </select>
           <select id="fsize">
             <option value="12">12 px</option>
             <option value="14">14 px</option>
@@ -24,26 +37,28 @@
             <option value="72">72 px</option>
           </select>
 
-          <select id="fontfamily">
+          <select id="fontfamily" onchange="formatdoc('fontName', this.value); this.selectedIndex=0">
                 <option value="Arial, sans-serif">Arial</option>
-                <option value="'Times New Roman', serif">Times New Roman</option>
+                <option value="Times New Roman, serif">Times New Roman</option>
                 <option value="'Courier New', monospace">Courier New</option>
           </select>
 
-          <button id="left">Left</button>
-          <button id="center">Center</button>
-          <button id="right">Right</button>
-          <button id="justify">Justify</button>
+          <button id="left" onclick="formatdoc('justifyLeft')">Left</button>
+          <button id="center" onclick="formatdoc('justifyCenter')">Center</button>
+          <button id="right" onclick="formatdoc('justifyRight')">Right</button>
+          <button id="justify" onclick="formatdoc('justifyFull')">Justify</button>
+          <button onclick="formatdoc('indent')" title="Increase indent"><i class='bxr  bx-right-indent'  ></i> </i></button>
+          <button onclick="formatdoc('outdent')" title="Decrease indent"><i class='bxr  bx-left-indent'  ></i> </button>
 
-          <input type="color" id="textcolor" title="Text Color">
+          <input type="color" id="textcolor" title="Text Color" oninput="formatdoc('forecolor', this.value); this.value='#000000';">
 
-          <input type="color" id="highlight" title="Highlight Color">
+          <input type="color" id="highlight" title="Highlight Color" oninput="formatdoc('hiliteColor', this.value); this.value='#000000';">
 
-          <button id="olist">Ordered List</button>
-          <button id="ulist">Unordered List</button>
+          <button id="olist" onclick="formatdoc('insertOrderedList')" >Ordered List</button>
+          <button id="ulist" onclick="formatdoc('insertUnorderedList')" >Unordered List</button>
 
-          <button id="link">Insert Link</button>
-
+          <button id="link" onclick="addlink()">Insert Link</button>
+          <button onclick="formatdoc('unlink')" title="unlink"><i class='bx  bx-unlink'  ></i> </button>
           <input type="file" id="imageUpload" accept="image/*" style="display:none;">
           <button id="imageLocal">Insert Local Image</button>
 
