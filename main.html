@@ -9,10 +9,10 @@
 </head>
 <body>
     <div id="whole">
-        <div id="header">
-          <button id="bold" onclick="formatdoc('bold')" title="bold">bold</button>
-          <button id="italic" onclick="formatdoc('italic')">italic</button>
-          <button id="underline" onclick="formatdoc('underline')">underline</button>
+        <div id="header" >
+          <button id="bold" onclick="formatdoc('bold')" title="bold"><i class='bxr  bx-bold'></i></button>
+          <button id="italic" onclick="formatdoc('italic')"><i class='bxr  bx-italic'  ></i> </button>
+          <button id="underline" onclick="formatdoc('underline')"><i class='bxr  bx-underline'  ></i> </button>
           <button onclick="formatdoc('undo')" title="Undo"><i class='bx  bx-undo'  ></i> </button>
           <button onclick="formatdoc('redo')" title="Redo"><i class='bx  bx-redo'  ></i> </button>
           <button onclick="formatdoc('strikeThrough')" title="Strikethrough"><i class='bx  bx-strikethrough'  ></i> </button>
@@ -33,39 +33,45 @@
                 <option value="'Courier New', monospace">Courier New</option>
           </select>
 
-          <button id="left" onclick="formatdoc('justifyLeft')">Left</button>
-          <button id="center" onclick="formatdoc('justifyCenter')">Center</button>
-          <button id="right" onclick="formatdoc('justifyRight')">Right</button>
-          <button id="justify" onclick="formatdoc('justifyFull')">Justify</button>
-          <button onclick="formatdoc('indent')" title="Increase indent"><i class='bxr  bx-right-indent'  ></i> </i></button>
-          <button onclick="formatdoc('outdent')" title="Decrease indent"><i class='bxr  bx-left-indent'  ></i> </button>
+          <button id="left" onclick="formatdoc('justifyLeft')"><i class='bxr  bx-align-left'  ></i> </button>
+          <button id="center" onclick="formatdoc('justifyCenter')"><i class='bxr  bx-align-center'  ></i> </button>
+          <button id="right" onclick="formatdoc('justifyRight')"><i class='bxr  bx-align-right'  ></i> </button>
+          <button id="justify" onclick="formatdoc('justifyFull')"><i class='bxr  bx-align-justify'  ></i> </button>
+          <button onclick="formatdoc('indent')" title="Increase indent"><i class='bxr  bx-arrow-left-stroke-square'  ></i> </button>
+          <button onclick="formatdoc('outdent')" title="Decrease indent"><i class='bxr  bx-arrow-right-stroke-square'  ></i> </button>
 
           <input type="color" id="textcolor" title="Text Color" oninput="formatdoc('forecolor', this.value); this.value='#000000';">
 
           <input type="color" id="highlight" title="Highlight Color" oninput="formatdoc('hiliteColor', this.value); this.value='#000000';">
 
-          <button id="olist" onclick="formatdoc('insertOrderedList')" >Ordered List</button>
-          <button id="ulist" onclick="formatdoc('insertUnorderedList')" >Unordered List</button>
+          <button id="olist" onclick="formatdoc('insertOrderedList')" title="Ordered List"><i class='bxr  bx-list-ol'  ></i> </button>
+          <button id="ulist" onclick="formatdoc('insertUnorderedList')" title="Unordered List"><i class='bxr  bx-list-ul'  ></i> </button>
 
-          <button id="link" onclick="addlink()">Insert Link</button>
+          <button id="link" onclick="addlink()" title="Insert Link"><i class='bxr  bx-link'  ></i> </button>
           <button onclick="formatdoc('unlink')" title="unlink"><i class='bx  bx-unlink'  ></i> </button>
           <input type="file" id="imageUpload" accept="image/*" style="display:none;">
-          <button id="imageLocal">Insert Local Image</button>
+          <button id="imageLocal" title="Insert Local Image"> <i class='bxr  bx-image-plus'  ></i> </button>
 
-          <button id="image">Insert Image</button>
+          <button id="image" title="Insert Image URL"><i class='bxr  bx-image'  ></i></button>
 
-          <button id="table">Insert Table</button>
+          <button id="table" title="Insert Table"><i class='bxr  bx-table'  ></i> </button>
 
           <input type="text" id="docTitle" placeholder="Enter Title">
           <input type="text" id="docAuthor" placeholder="Enter Author">
-          <button id="resetBtn">Reset</button>
-          <button id="previewBtn">Preview</button>
-          <button id="exportHTML">Export HTML</button>
-          <button id="exportDOCX">Export DOCX</button>
-          <button id="exportPDF">Export PDF</button>
-
-          <input type="file" id="openFileInput" accept=".txt,.html,.docx,.pdf" style="display:none;">
-          <button id="openFileBtn">Open File</button>
+          <button id="resetBtn" title="Reset"><i class='bxr  bx-analyze'  ></i> </button>
+          <button id="previewBtn" title="Preview"><i class='bxr  bx-tv'  ></i> </button>
+          <button id="exportHTML" title="Export HTMl"><i class='bxr  bx-folder-code'  ></i> </button>
+          <button id="exportDOCX" title="Export DOCX"><i class='bxr  bx-folder-down-arrow'  ></i> </button>
+          <button id="exportPDF" title="Export PDF"><i class='bxr  bx-file-star'  ></i> </button>
+                    <!-- Find & Replace -->
+          <div id="findReplaceBox">
+            <input type="text" id="findText" placeholder="Find..." />
+            <input type="text" id="replaceText" placeholder="Replace with..." />
+            <button id="findNext">Find</button>
+            <button id="replaceOne">Replace</button>
+            <button id="replaceAll">Replace All</button>
+          </div>
+          <button id="themeToggle">🌙</button>
         </div>
         <div id="funcbody">
             <div id="press" contenteditable="true" ><br></div>
@@ -77,22 +83,14 @@
           </div>
         </div>
     </div>
-<!-- <script src="https://cdn.jsdelivr.net/npm/html-docx-js/dist/html-docx.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.0.0/docx.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-    <script src="main.js"></script> -->
 
     <script src="https://cdn.jsdelivr.net/npm/html-docx-js/dist/html-docx.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.8.162/pdf.min.js"></script>
-
-<script src="main.js"></script>
+    <script src="main.js"></script>
 
 </body>
 </html>

@@ -1,11 +1,71 @@
+/* ====== THEME VARIABLES ====== */
+:root {
+  --bg: #ffffff;
+  --text: #000000;
+  --toolbar-bg: #ffffff;
+  --toolbar-text: #000000;
+  --button-bg: #007bff;
+  --button-text: #ffffff;
+}
+
+body.dark-mode {
+  --bg: #121212;
+  --text: #f1f1f1;
+  --toolbar-bg: #1f1f1f;
+  --toolbar-text: #ffffff;
+  --button-bg: #444;
+  --button-text: #f1f1f1;
+}
+
+/* ====== BASE RESET ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ====== BODY ====== */
+body {
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* ====== WRAPPER ====== */
+#whole {
+  max-width: 1200px;
+  width: 95%;
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 15px;
+  overflow: hidden;
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #333;
+}
+
+/* ====== TOOLBAR ====== */
 #header {
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 10px;
+  padding: 5px;
+  background-color: var(--toolbar-bg);
+  color: var(--toolbar-text);
   align-items: center;
-  justify-content: flex-start;
-  background-color: burlywood;
+  justify-content: center;
+  border: 1px solid #333;
 }
 
 #header button,
@@ -13,37 +73,72 @@
 #header input[type="color"],
 #header input[type="number"],
 #header input[type="file"] {
-  padding: 5px 8px;
-  font-size: 14px;
-  flex-shrink: 0;
+  padding: 4px 8px;
+  font-size: 15px;
+  border: none;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border-radius: 4px;
   cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+#header button:hover {
+  background: #0056b3;
 }
 
 button {
   height: 30px;
 }
 
+/* ====== THEME TOGGLE BUTTON ====== */
+#themeToggle {
+  padding: 4px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* Light mode look */
+body:not(.dark-mode) #themeToggle {
+  background: #333;
+  color: #fff;
+}
+
+/* Dark mode look */
+body.dark-mode #themeToggle {
+  background: #f1f1f1;
+  color: #121212;
+}
+
+/* ====== EDITOR AREA ====== */
 #funcbody {
   width: 100%;
-  height: 480px;
+  height: calc(100vh - 60px);
   display: flex;
   justify-content: center;
+  overflow-y: auto; /* scrollable container */
+  border: 1px solid #333;
 }
 
 #press {
-  overflow-wrap: break-word;
-  height: 100%;             /* safer than inherit */
   width: 100%;
-  color: black;
-  background-color: white;
-  caret-color: black;
   min-height: 400px;
   padding: 10px;
+  background-color: var(--bg);
+  color: var(--text);
+  caret-color: var(--text);
   outline: none;
   white-space: pre-wrap;
-  font-size: 16px;          /* Default size */
+  font-size: 16px;
+  box-sizing: border-box;
 }
 
+/* ====== TABLE & IMAGES ====== */
 #press table {
   border: 1px solid #333;
   border-collapse: collapse;
@@ -57,25 +152,20 @@ button {
   text-align: center;
 }
 
-#press * {
-  outline: none !important; /* don’t kill borders */
-}
-
 #press img {
-  max-width: 250px;
+  max-width: 100%;
   height: auto;
   display: inline-block;
   margin: 5px;
 }
 
-/* Toolbar link button */
-#link {
-  cursor: pointer;
+#press * {
+  outline: none !important;
 }
 
-/* Modal overlay */
+/* ====== PREVIEW MODAL ====== */
 #previewModal {
-  display: none; /* hidden by default */
+  display: none;
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -86,9 +176,9 @@ button {
   background-color: rgba(0,0,0,0.5);
 }
 
-/* Modal content box */
 #previewContent {
-  background-color: #fff;
+  background-color: var(--bg);
+  color: var(--text);
   margin: 50px auto;
   padding: 20px;
   border-radius: 8px;
@@ -99,7 +189,6 @@ button {
   position: relative;
 }
 
-/* Close button */
 #closePreview {
   position: absolute;
   top: 10px;
@@ -109,8 +198,90 @@ button {
   cursor: pointer;
 }
 
-/* Preview body styling */
 #previewBody {
   font-family: Arial, sans-serif;
-  color: #000;
+  color: var(--text);
+  word-wrap: break-word;
+}
+
+/* ====== FIND & REPLACE BOX ====== */
+#findReplaceBox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--toolbar-bg);
+  border: 1px solid #666;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  font-size: 14px;
+  color: var(--toolbar-text);
+}
+
+#findReplaceBox input {
+  padding: 4px 6px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  background: var(--bg);
+  color: var(--text);
+}
+
+#findReplaceBox button {
+  padding: 4px 8px;
+  font-size: 13px;
+  border: none;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#findReplaceBox button:hover {
+  background: #0056b3;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 1024px) {
+  #press {
+    font-size: 14px;
+  }
+  #previewContent {
+    width: 90%;
+    margin: 30px auto;
+  }
+}
+
+@media (max-width: 768px) {
+  #header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #header button, 
+  #header select, 
+  #header input {
+    flex: 1 1 100%;
+    margin-bottom: 5px;
+  }
+  #press {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  #press {
+    font-size: 12px;
+    padding: 8px;
+  }
+  #previewContent {
+    width: 95%;
+    padding: 15px;
+  }
+  #closePreview {
+    font-size: 20px;
+    top: 5px;
+    right: 10px;
+  }
 }

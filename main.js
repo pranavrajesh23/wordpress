@@ -256,3 +256,116 @@ resetBtn.addEventListener("click", () => {
         editor.focus();
     }
 });
+
+
+// ====== FIND & REPLACE ======
+const findInput = document.getElementById("findText");
+const replaceInput = document.getElementById("replaceText");
+const findNextBtn = document.getElementById("findNext");
+const replaceOneBtn = document.getElementById("replaceOne");
+const replaceAllBtn = document.getElementById("replaceAll");
+
+let lastMatchIndex = -1;
+
+// Helper: search & highlight next match
+function findNext() {
+  const text = editor.innerText;
+  const searchTerm = findInput.value;
+  if (!searchTerm) return;
+
+  // Find index after last match
+  let startIndex = text.toLowerCase().indexOf(searchTerm.toLowerCase(), lastMatchIndex + 1);
+
+  // If not found, start from beginning
+  if (startIndex === -1) {
+    startIndex = text.toLowerCase().indexOf(searchTerm.toLowerCase(), 0);
+    if (startIndex === -1) {
+      alert("No matches found");
+      return;
+    }
+  }
+
+  lastMatchIndex = startIndex;
+
+  // Highlight selection
+  const range = document.createRange();
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+
+  let charIndex = 0;
+  let nodeStack = [editor];
+  let node, foundStart = false, stop = false;
+
+  while (!stop && (node = nodeStack.pop())) {
+    if (node.nodeType === 3) { // Text node
+      let nextCharIndex = charIndex + node.length;
+      if (!foundStart && startIndex >= charIndex && startIndex < nextCharIndex) {
+        range.setStart(node, startIndex - charIndex);
+        foundStart = true;
+      }
+      if (foundStart && (startIndex + searchTerm.length) <= nextCharIndex) {
+        range.setEnd(node, (startIndex + searchTerm.length) - charIndex);
+        stop = true;
+      }
+      charIndex = nextCharIndex;
+    } else {
+      let i = node.childNodes.length;
+      while (i--) nodeStack.push(node.childNodes[i]);
+    }
+  }
+
+  sel.addRange(range);
+  editor.focus();
+}
+
+// Replace current selection
+function replaceOne() {
+  if (!findInput.value) return;
+  if (window.getSelection().toString().toLowerCase() === findInput.value.toLowerCase()) {
+    document.execCommand("insertText", false, replaceInput.value);
+  }
+  findNext(); // jump to next occurrence
+}
+
+// Replace all
+function replaceAll() {
+  const searchTerm = findInput.value;
+  const replacement = replaceInput.value;
+  if (!searchTerm) return;
+
+  editor.innerHTML = editor.innerHTML.replace(
+    new RegExp(searchTerm, "gi"),
+    replacement
+  );
+  lastMatchIndex = -1;
+}
+
+// Event listeners
+findNextBtn.addEventListener("click", findNext);
+replaceOneBtn.addEventListener("click", replaceOne);
+replaceAllBtn.addEventListener("click", replaceAll);
+
+/// dark mode
+
+const themeBtn = document.getElementById("themeToggle");
+
+// Load saved theme on startup
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark-mode");
+  themeBtn.textContent = "☀️";
+} else {
+  themeBtn.textContent = "🌙";
+}
+
+// Toggle theme
+themeBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+
+  if (document.body.classList.contains("dark-mode")) {
+    themeBtn.textContent = "☀️";
+    localStorage.setItem("theme", "dark");
+  } else {
+    themeBtn.textContent = "🌙";
+    localStorage.setItem("theme", "light");
+  }
+});
