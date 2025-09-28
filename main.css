@@ -43,10 +43,37 @@ button{
 #press table {
   border: 1px solid #333;
   border-collapse: collapse;
-  width: 100%;
+  margin: 10px 0;
 }
+
 #press td {
   border: 1px solid #333;
-  padding: 5px;
-  min-width: 50px;
+  padding: 8px;
+  min-width: 80px;
+  text-align: center;
+}
+
+/* Prevent blue highlight/border around images in contenteditable */
+#press {
+  min-height: 400px;
+  padding: 10px;
+  outline: none;
+  white-space: pre-wrap;
+}
+
+#press * {
+  border: none !important; 
+  outline: none !important;
+}
+
+#press img {
+  max-width: 250px;
+  height: auto;
+  display: inline-block;
+  margin: 5px;
+}
+
+
+#press {
+  font-size: 16px; /* Default size */
 }
