@@ -244,7 +244,7 @@ body.dark-mode #themeToggle {
 }
 
 /* ====== RESPONSIVE ====== */
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
   #press {
     font-size: 14px;
   }
@@ -284,4 +284,4 @@ body.dark-mode #themeToggle {
     top: 5px;
     right: 10px;
   }
-}
+} */

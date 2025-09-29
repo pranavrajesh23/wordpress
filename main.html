@@ -16,33 +16,12 @@
           <button onclick="formatdoc('undo')" title="Undo"><i class='bx  bx-undo'  ></i> </button>
           <button onclick="formatdoc('redo')" title="Redo"><i class='bx  bx-redo'  ></i> </button>
           <button onclick="formatdoc('strikeThrough')" title="Strikethrough"><i class='bx  bx-strikethrough'  ></i> </button>
-          <select id="fsizee" onchange="formatdoc('fontsize', this.value); this.selectedIndex=0">
-                    <option value="" selected="" hidden="" disabled="">Font size</option>
-                    <option value="1">Extra small</option>
-                    <option value="2">Small</option>
-                    <option value="3">Regular</option>
-                    <option value="4">Medium</option>
-                    <option value="5">Large</option>
-                    <option value="6">Extra Large</option>
-                    <option value="7">Big</option>
-          </select>
-
-          <select id="fontfamily" onchange="formatdoc('fontName', this.value); this.selectedIndex=0">
-                <option value="Arial, sans-serif">Arial</option>
-                <option value="Times New Roman, serif">Times New Roman</option>
-                <option value="'Courier New', monospace">Courier New</option>
-          </select>
-
           <button id="left" onclick="formatdoc('justifyLeft')"><i class='bxr  bx-align-left'  ></i> </button>
           <button id="center" onclick="formatdoc('justifyCenter')"><i class='bxr  bx-align-center'  ></i> </button>
           <button id="right" onclick="formatdoc('justifyRight')"><i class='bxr  bx-align-right'  ></i> </button>
           <button id="justify" onclick="formatdoc('justifyFull')"><i class='bxr  bx-align-justify'  ></i> </button>
           <button onclick="formatdoc('indent')" title="Increase indent"><i class='bxr  bx-arrow-left-stroke-square'  ></i> </button>
           <button onclick="formatdoc('outdent')" title="Decrease indent"><i class='bxr  bx-arrow-right-stroke-square'  ></i> </button>
-
-          <input type="color" id="textcolor" title="Text Color" oninput="formatdoc('forecolor', this.value); this.value='#000000';">
-
-          <input type="color" id="highlight" title="Highlight Color" oninput="formatdoc('hiliteColor', this.value); this.value='#000000';">
 
           <button id="olist" onclick="formatdoc('insertOrderedList')" title="Ordered List"><i class='bxr  bx-list-ol'  ></i> </button>
           <button id="ulist" onclick="formatdoc('insertUnorderedList')" title="Unordered List"><i class='bxr  bx-list-ul'  ></i> </button>
@@ -55,12 +34,37 @@
           <button id="image" title="Insert Image URL"><i class='bxr  bx-image'  ></i></button>
 
           <button id="table" title="Insert Table"><i class='bxr  bx-table'  ></i> </button>
+          <select id="fsizee" onchange="formatdoc('fontsize', this.value); this.selectedIndex=0">
+                    <option value="" selected="" hidden="" disabled="">Font size</option>
+                    <option value="1">Extra small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Regular</option>
+                    <option value="4">Medium</option>
+                    <option value="5">Large</option>
+                    <option value="6">Extra Large</option>
+                    <option value="7">Big</option>
+          </select>
+
+          <select id="fontFamily" aria-label="Font family">
+                    <option value="" disabled selected hidden>Font</option>
+                    <option value="Arial" style="font-family: Arial;">Arial</option>
+                    <option value="Times New Roman" style="font-family: 'Times New Roman';">Times New Roman</option>
+                    <option value="Courier New" style="font-family: 'Courier New';">Courier New</option>
+          </select>
+
+          
+
+          <input type="color" id="textcolor" title="Text Color" oninput="formatdoc('forecolor', this.value); this.value='#000000';">
+
+          <input type="color" id="highlight" title="Highlight Color" oninput="formatdoc('hiliteColor', this.value); this.value='#000000';">
+
+          
 
           <input type="text" id="docTitle" placeholder="Enter Title">
           <input type="text" id="docAuthor" placeholder="Enter Author">
           <button id="resetBtn" title="Reset"><i class='bxr  bx-analyze'  ></i> </button>
           <button id="previewBtn" title="Preview"><i class='bxr  bx-tv'  ></i> </button>
-          <button id="exportHTML" title="Export HTMl"><i class='bxr  bx-folder-code'  ></i> </button>
+          <button id="exportHTML" title="Export HTML"><i class='bxr  bx-folder-code'  ></i> </button>
           <button id="exportDOCX" title="Export DOCX"><i class='bxr  bx-folder-down-arrow'  ></i> </button>
           <button id="exportPDF" title="Export PDF"><i class='bxr  bx-file-star'  ></i> </button>
                     <!-- Find & Replace -->

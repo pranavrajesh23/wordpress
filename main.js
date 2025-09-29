@@ -2,6 +2,8 @@ const editor=document.getElementById("press")
 let savedSelection = null;
 editor.style.fontSize = "16px";
 
+
+
 document.addEventListener("selectionchange", () => {
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
@@ -36,6 +38,21 @@ function formatdoc(cmd, value = null) {
         document.execCommand(cmd);
     }
 }
+
+const fontFamilySelect = document.getElementById('fontFamily');
+
+fontFamilySelect.addEventListener('change', function () {
+    const font = this.value;
+    const sel = window.getSelection();
+
+    if (sel && sel.rangeCount > 0 && sel.toString().length > 0) {
+        const selectedText = sel.toString();
+        document.execCommand("insertHTML", false, `<span style="font-family:${font};">${selectedText}</span>`);
+    } else {
+        content.style.fontFamily = font;
+    }
+    this.selectedIndex = 0;
+});
 
 function addlink() {
     const url = prompt('Insert URL');
@@ -127,79 +144,6 @@ function insertAtCaret(node) {
   sel.removeAllRanges();
   sel.addRange(range);
 }
-
-// ========== EXPORT FUNCTIONS ==========
-
-// Export HTML
-document.getElementById("exportHTML").addEventListener("click", () => {
-  const title = document.getElementById("docTitle").value || "Untitled";
-  const author = document.getElementById("docAuthor").value || "Unknown Author";
-  const content = document.getElementById("press").innerHTML;
-
-  const fileContent = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>${title}</title>
-  <meta name="author" content="${author}">
-</head>
-<body>
-  <h1>${title}</h1>
-  <h3>By ${author}</h3>
-  <div>${content}</div>
-</body>
-</html>`;
-
-  const blob = new Blob([fileContent], { type: "text/html" });
-  saveAs(blob, title.replace(/\s+/g, "_") + ".html");
-});
-
-document.getElementById("exportDOCX").addEventListener("click", () => {
-  const title = document.getElementById("docTitle").value || "Untitled";
-  const author = document.getElementById("docAuthor").value || "Unknown Author";
-  const content = editor.innerHTML;
-
-  const html = `
-    <html>
-      <head>
-        <meta charset="UTF-8">
-        <title>${title}</title>
-        <meta name="author" content="${author}">
-      </head>
-      <body>
-        <h1>${title}</h1>
-        <h3>By ${author}</h3>
-        <div>${content}</div>
-      </body>
-    </html>`;
-
-  const blob = htmlDocx.asBlob(html);
-  saveAs(blob, title.replace(/\s+/g, "_") + ".docx");
-});
-
-
-document.getElementById("exportPDF").addEventListener("click", () => {
-  const title = document.getElementById("docTitle").value || "Untitled";
-  const author = document.getElementById("docAuthor").value || "Unknown Author";
-
-  const wrapper = document.createElement("div");
-  wrapper.innerHTML = `
-    <h1>${title}</h1>
-    <h3>By ${author}</h3>
-    <div>${editor.innerHTML}</div>
-  `;
-
-  const opt = {
-    margin:       10,
-    filename:     title.replace(/\s+/g, "_") + ".pdf",
-    image:        { type: "jpeg", quality: 0.98 },
-    html2canvas:  { scale: 2 },
-    jsPDF:        { unit: "mm", format: "a4", orientation: "portrait" }
-  };
-
-  html2pdf().set(opt).from(wrapper).save();
-});
 
 
 //preveiw da 
@@ -369,3 +313,103 @@ themeBtn.addEventListener("click", () => {
     localStorage.setItem("theme", "light");
   }
 });
+//export class
+class DocumentExporter {
+  constructor(editorId, titleId, authorId) {
+    this.editor = document.getElementById(editorId);
+    this.titleInput = document.getElementById(titleId);
+    this.authorInput = document.getElementById(authorId);
+  }
+
+  getTitle() {
+    return this.titleInput.value || "Untitled";
+  }
+
+  getAuthor() {
+    return this.authorInput.value || "Unknown Author";
+  }
+
+  getContent() {
+    return this.editor.innerHTML;
+  }
+
+  exportHTML() {
+    const title = this.getTitle();
+    const author = this.getAuthor();
+    const content = this.getContent();
+
+    const fileContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>${title}</title>
+        <meta name="author" content="${author}">
+      </head>
+      <body>
+        <h1>${title}</h1>
+        <h3>By ${author}</h3>
+        <div>${content}</div>
+      </body>
+      </html>`;
+
+    const blob = new Blob([fileContent], { type: "text/html" });
+    saveAs(blob, title.replace(/\s+/g, "_") + ".html");
+  }
+
+  exportDOCX() {
+    const title = this.getTitle();
+    const author = this.getAuthor();
+    const content = this.getContent();
+
+    const html = `
+      <html>
+        <head>
+          <meta charset="UTF-8">
+          <title>${title}</title>
+          <meta name="author" content="${author}">
+        </head>
+        <body>
+          <h1>${title}</h1>
+          <h3>By ${author}</h3>
+          <div>${content}</div>
+        </body>
+      </html>`;
+
+    const blob = htmlDocx.asBlob(html);
+    saveAs(blob, title.replace(/\s+/g, "_") + ".docx");
+  }
+
+  exportPDF() {
+    const title = this.getTitle();
+    const author = this.getAuthor();
+
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = `
+      <h1>${title}</h1>
+      <h3>By ${author}</h3>
+      <div>${this.getContent()}</div>
+    `;
+
+    const opt = {
+      margin: 10,
+      filename: title.replace(/\s+/g, "_") + ".pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+    };
+
+    html2pdf().set(opt).from(wrapper).save();
+  }
+
+  bindEvents(htmlBtnId, docxBtnId, pdfBtnId) {
+    document.getElementById(htmlBtnId).addEventListener("click", () => this.exportHTML());
+    document.getElementById(docxBtnId).addEventListener("click", () => this.exportDOCX());
+    document.getElementById(pdfBtnId).addEventListener("click", () => this.exportPDF());
+  }
+}
+
+// Usage Example
+const exporter = new DocumentExporter("press", "docTitle", "docAuthor");
+exporter.bindEvents("exportHTML", "exportDOCX", "exportPDF");
+
