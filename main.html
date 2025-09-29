@@ -17,7 +17,14 @@
                 <button class="tabBtn" data-tab="insertGroup">Insert</button>
                 <button class="tabBtn" data-tab="findReplaceBox">Edit</button>     
                 <button id="themeToggle">🌙</button>
-                <div id="autosaveStatus">Not saved yet</div>
+                
+                <div id="wordCount">Words count: </div>
+                <div id="zoomControls">
+                    <span>Zoom:</span>
+                    <input type="range" id="zoomSlider" min="50" max="200" value="100">
+                    <span id="zoomValue">100%</span>
+                </div>
+            <div id="autosaveStatus">Not saved yet</div>
             </div>
             <div id="ribbonGroupWrappers">
             <div id="fileGroup" class="ribbonGroup" style="display: block;">
@@ -97,7 +104,7 @@
                 <button id="newpage">NewPage</button>
             </div>
             <div id="findReplaceBox" class="ribbonGroup">
-                 <input type="text" id="findText" placeholder="Find..." />
+                <input type="text" id="findText" placeholder="Find..." />
                 <input type="text" id="replaceText" placeholder="Replace with..." />
                 <button id="findNext">Find</button>
                 <button id="replaceOne">Replace</button>

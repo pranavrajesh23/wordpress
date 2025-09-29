@@ -334,7 +334,7 @@ class Insert extends Basic {
 
       this.contentDiv.focus();
       document.execCommand("insertHTML", false, table);
-      this.setupresizer(table);
+      // this.setupresizer(table);
     }
   }
 
@@ -483,6 +483,38 @@ class Insert extends Basic {
       }
     });
   }
+
+  handleDragStart = (e) => {
+  const target = e.target.closest("table, img");
+  if (!target) return;
+
+  this.dragging = target;
+  this.dragStartX = e.clientX - target.offsetLeft;
+  this.dragStartY = e.clientY - target.offsetTop;
+
+  document.addEventListener("mousemove", this.handleDragging);
+  document.addEventListener("mouseup", this.handleDragEnd);
+};
+
+handleDragging = (e) => {
+  if (!this.dragging) return;
+  e.preventDefault();
+  this.dragging.style.position = "absolute";
+  this.dragging.style.left = e.clientX - this.dragStartX + "px";
+  this.dragging.style.top = e.clientY - this.dragStartY + "px";
+};
+
+handleDragEnd = () => {
+  this.dragging = null;
+  document.removeEventListener("mousemove", this.handleDragging);
+  document.removeEventListener("mouseup", this.handleDragEnd);
+};
+
+bindResizingAndDragging() {
+  this.bindResizing();
+  this.contentDiv.addEventListener("mousedown", this.handleDragStart);
+}
+
   // === Helper: Insert Node at Caret ===
   insertAtCaret(node) {
     this.contentDiv.focus();
@@ -599,7 +631,8 @@ const insertTools = new Insert(
   "imageLocal",   // local image button
   "imageUpload"   // hidden file input
 );
-insertTools.bindResizing()
+insertTools.bindResizing();
+
 // Usage
 const findReplace = new FindReplace(
   "docTitle",    // title input
@@ -666,7 +699,7 @@ fontFamilySelect.addEventListener('change', function () {
         const selectedText = sel.toString();
         document.execCommand("insertHTML", false, `<span style="font-family:${font};">${selectedText}</span>`);
     } else {
-        content.style.fontFamily = font;
+        this.content.style.fontFamily = font;
     }
     this.selectedIndex = 0;
 });
@@ -772,3 +805,54 @@ document.getElementById("newpage").addEventListener('click', function() {
     newPage.focus();
 });
 
+const themeBtn=document.getElementById("themeToggle")
+
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark-mode");
+  themeBtn.textContent = "☀️";
+} else {
+  themeBtn.textContent = "🌙";
+}
+ 
+// Toggle theme
+themeBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+ 
+  if (document.body.classList.contains("dark-mode")) {
+    themeBtn.textContent = "☀️";
+    localStorage.setItem("theme", "dark");
+  } else {
+    themeBtn.textContent = "🌙";
+    localStorage.setItem("theme", "light");
+  }
+});
+
+const editor = document.getElementById("press");
+const wordCountDiv = document.getElementById("wordCount");
+
+function updateWordCount() {
+    const text = editor.innerText || ""; // get plain text
+    const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+    wordCountDiv.textContent = `Words count: ${words.length}`;
+}
+
+// Update on input (typing, paste, delete, etc.)
+editor.addEventListener("input", updateWordCount);
+
+// Initialize count on page load
+updateWordCount();
+
+
+// const editor = document.getElementById("press");
+const zoomSlider = document.getElementById("zoomSlider");
+const zoomValue = document.getElementById("zoomValue");
+
+zoomSlider.addEventListener("input", () => {
+    const zoomPercent = zoomSlider.value;
+    const zoomFactor = zoomPercent / 100;
+
+    editor.style.transform = `scale(${zoomFactor})`;
+    editor.style.transformOrigin = "top left";
+
+    zoomValue.textContent = zoomPercent + "%";
+});

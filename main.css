@@ -182,7 +182,7 @@ body.dark-mode #themeToggle {
 }
 
 #press {
-  width: 100%;
+  width: 80%;
   min-height: 400px;
   padding: 10px;
   background-color: var(--bg);
@@ -193,6 +193,69 @@ body.dark-mode #themeToggle {
   font-size: 16px;
   box-sizing: border-box;
 }
+
+/* Zoom container */
+#zoomControls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 10px;
+    background: var(--button-bg);
+    border-radius: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
+    user-select: none;
+    width: fit-content;
+}
+
+/* Zoom label */
+#zoomControls span:first-child {
+    font-weight: 500;
+    color: #fff;
+}
+
+/* Zoom slider */
+#zoomSlider {
+    -webkit-appearance: none;
+    width: 120px;
+    height: 6px;
+    border-radius: 5px;
+    background: #ddd;
+    outline: none;
+    transition: background 0.3s;
+    cursor: pointer;
+}
+
+#zoomSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: background 0.3s;
+}
+
+#zoomSlider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: background 0.3s;
+}
+
+/* Zoom percentage display */
+#zoomValue {
+    font-weight: 500;
+   color: #fff;
+    min-width: 40px;
+    text-align: right;
+}
+
 
 /* #press{
     background-color: #fff;
@@ -353,8 +416,9 @@ body.dark-mode #themeToggle {
 #autosaveStatus {
     font-size: 14px;
     color: green;
-    margin-top: 5px;
+    margin-top: 8px;
     font-family: 'Courier New', Courier, monospace;
+    margin-left: 450px;
   }
 .img-container {
   display: inline-block;
@@ -377,6 +441,20 @@ body.dark-mode #themeToggle {
   right: 0;
   bottom: 0;
   cursor: se-resize;
+}
+
+#wordCount {
+    position: fixed;      /* stays visible even if you scroll */
+    bottom: 20px;         /* distance from bottom of page */
+    right: 20px;          /* distance from right of page */
+    background-color: rgba(0, 0, 0, 0.7); /* semi-transparent black */
+    color: #fff;          /* white text */
+    padding: 8px 12px;    /* some padding around text */
+    border-radius: 5px;   /* rounded corners */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    z-index: 1000;        /* make sure it's on top */
 }
 
 /* ====== RESPONSIVE ====== */
