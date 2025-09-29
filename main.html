@@ -7,34 +7,66 @@
     <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="main.css">
 </head>
+
 <body>
     <div id="whole">
         <div id="header" >
-          <button id="bold" onclick="formatdoc('bold')" title="bold"><i class='bxr  bx-bold'></i></button>
-          <button id="italic" onclick="formatdoc('italic')"><i class='bxr  bx-italic'  ></i> </button>
-          <button id="underline" onclick="formatdoc('underline')"><i class='bxr  bx-underline'  ></i> </button>
-          <button onclick="formatdoc('undo')" title="Undo"><i class='bx  bx-undo'  ></i> </button>
-          <button onclick="formatdoc('redo')" title="Redo"><i class='bx  bx-redo'  ></i> </button>
-          <button onclick="formatdoc('strikeThrough')" title="Strikethrough"><i class='bx  bx-strikethrough'  ></i> </button>
-          <button id="left" onclick="formatdoc('justifyLeft')"><i class='bxr  bx-align-left'  ></i> </button>
-          <button id="center" onclick="formatdoc('justifyCenter')"><i class='bxr  bx-align-center'  ></i> </button>
-          <button id="right" onclick="formatdoc('justifyRight')"><i class='bxr  bx-align-right'  ></i> </button>
-          <button id="justify" onclick="formatdoc('justifyFull')"><i class='bxr  bx-align-justify'  ></i> </button>
-          <button onclick="formatdoc('indent')" title="Increase indent"><i class='bxr  bx-arrow-left-stroke-square'  ></i> </button>
-          <button onclick="formatdoc('outdent')" title="Decrease indent"><i class='bxr  bx-arrow-right-stroke-square'  ></i> </button>
+            <div id="ribbonTabs">
+                <button class="tabBtn active" data-tab="fileGroup">File</button>
+                <button class="tabBtn" data-tab="homeGroup">Home</button>
+                <button class="tabBtn" data-tab="insertGroup">Insert</button>
+                <button class="tabBtn" data-tab="findReplaceBox">Edit</button>     
+                <button id="themeToggle">🌙</button>
+                <div id="autosaveStatus">Not saved yet</div>
+            </div>
+            <div id="ribbonGroupWrappers">
+            <div id="fileGroup" class="ribbonGroup" style="display: block;">
+                <input type="text" id="docTitle" placeholder="Enter Title">
+                <input type="text" id="docAuthor" placeholder="Enter Author">
+                <button id="resetBtn" title="Reset"><i class='bxr  bx-analyze'  ></i> </button>
+                <button id="previewBtn" title="Preview"><i class='bxr  bx-tv'  ></i> </button>
+                <button id="exportHTML" title="Export HTML"><i class='bxr  bx-folder-code'  ></i> </button>
+                <button id="exportDOCX" title="Export DOCX"><i class='bxr  bx-folder-down-arrow'  ></i> </button>
+                <button id="exportPDF" title="Export PDF"><i class='bxr  bx-file-star'  ></i> </button>
+                <button id="print">print</button>
+            </div>
 
-          <button id="olist" onclick="formatdoc('insertOrderedList')" title="Ordered List"><i class='bxr  bx-list-ol'  ></i> </button>
-          <button id="ulist" onclick="formatdoc('insertUnorderedList')" title="Unordered List"><i class='bxr  bx-list-ul'  ></i> </button>
+            <div id="homeGroup" class="ribbonGroup">
+                <!-- <button id="bold" onclick="formatdoc('bold')" title="bold"><i class='bxr  bx-bold'></i></button>
+                <button id="italic" onclick="formatdoc('italic')"><i class='bxr  bx-italic'  ></i> </button>
+                <button id="underline" onclick="formatdoc('underline')"><i class='bxr  bx-underline'  ></i> </button>
+                <button onclick="formatdoc('undo')" title="Undo"><i class='bx  bx-undo'  ></i> </button>
+                <button onclick="formatdoc('redo')" title="Redo"><i class='bx  bx-redo'  ></i> </button>
+                <button onclick="formatdoc('strikeThrough')" title="Strikethrough"><i class='bx  bx-strikethrough'  ></i> </button>
+                <button id="left" onclick="formatdoc('justifyLeft')"><i class='bxr  bx-align-left'  ></i> </button>
+                <button id="center" onclick="formatdoc('justifyCenter')"><i class='bxr  bx-align-center'  ></i> </button>
+                <button id="right" onclick="formatdoc('justifyRight')"><i class='bxr  bx-align-right'  ></i> </button>
+                <button id="justify" onclick="formatdoc('justifyFull')"><i class='bxr  bx-align-justify'  ></i> </button>
+                <button onclick="formatdoc('indent')" title="Increase indent"><i class='bxr  bx-arrow-left-stroke-square'  ></i> </button>
+                <button onclick="formatdoc('outdent')" title="Decrease indent"><i class='bxr  bx-arrow-right-stroke-square'  ></i> </button>
+                <button id="olist" onclick="formatdoc('insertOrderedList')" title="Ordered List"><i class='bxr  bx-list-ol'  ></i> </button>
+                <button id="ulist" onclick="formatdoc('insertUnorderedList')" title="Unordered List"><i class='bxr  bx-list-ul'  ></i> </button>
+                <select id="fsizee" onchange="formatter.formatdoc('fontsize', this.value); this.selectedIndex=0"> -->
+                <button id="bold" title="Bold"><i class='bxr bx-bold'></i></button>
+                <button id="italic" title="Italic"><i class='bxr bx-italic'></i></button>
+                <button id="underline" title="Underline"><i class='bxr bx-underline'></i></button>
 
-          <button id="link" onclick="addlink()" title="Insert Link"><i class='bxr  bx-link'  ></i> </button>
-          <button onclick="formatdoc('unlink')" title="unlink"><i class='bx  bx-unlink'  ></i> </button>
-          <input type="file" id="imageUpload" accept="image/*" style="display:none;">
-          <button id="imageLocal" title="Insert Local Image"> <i class='bxr  bx-image-plus'  ></i> </button>
+                <button id="undo" title="Undo"><i class='bx bx-undo'></i></button>
+                <button id="redo" title="Redo"><i class='bx bx-redo'></i></button>
+                <button id="strike" title="Strikethrough"><i class='bx bx-strikethrough'></i></button>
 
-          <button id="image" title="Insert Image URL"><i class='bxr  bx-image'  ></i></button>
+                <button id="left" title="Align Left"><i class='bxr bx-align-left'></i></button>
+                <button id="center" title="Align Center"><i class='bxr bx-align-center'></i></button>
+                <button id="right" title="Align Right"><i class='bxr bx-align-right'></i></button>
+                <button id="justify" title="Justify"><i class='bxr bx-align-justify'></i></button>
 
-          <button id="table" title="Insert Table"><i class='bxr  bx-table'  ></i> </button>
-          <select id="fsizee" onchange="formatdoc('fontsize', this.value); this.selectedIndex=0">
+                <button id="indent" title="Increase Indent"><i class='bxr bx-arrow-left-stroke-square'></i></button>
+                <button id="outdent" title="Decrease Indent"><i class='bxr bx-arrow-right-stroke-square'></i></button>
+
+                <button id="olist" title="Ordered List"><i class='bxr bx-list-ol'></i></button>
+                <button id="ulist" title="Unordered List"><i class='bxr bx-list-ul'></i></button>
+
+                <select id="fsizee">
                     <option value="" selected="" hidden="" disabled="">Font size</option>
                     <option value="1">Extra small</option>
                     <option value="2">Small</option>
@@ -43,39 +75,35 @@
                     <option value="5">Large</option>
                     <option value="6">Extra Large</option>
                     <option value="7">Big</option>
-          </select>
+                </select>
 
-          <select id="fontFamily" aria-label="Font family">
+                <select id="fontFamily" aria-label="Font family">
                     <option value="" disabled selected hidden>Font</option>
                     <option value="Arial" style="font-family: Arial;">Arial</option>
                     <option value="Times New Roman" style="font-family: 'Times New Roman';">Times New Roman</option>
                     <option value="Courier New" style="font-family: 'Courier New';">Courier New</option>
-          </select>
+                </select>
+                <input type="color" id="textcolor" title="Text Color" oninput="formatdoc('forecolor', this.value); this.value='#000000';">
+                <input type="color" id="highlight" title="Highlight Color" oninput="formatdoc('hiliteColor', this.value); this.value='#000000';">
+            </div>
 
-          
-
-          <input type="color" id="textcolor" title="Text Color" oninput="formatdoc('forecolor', this.value); this.value='#000000';">
-
-          <input type="color" id="highlight" title="Highlight Color" oninput="formatdoc('hiliteColor', this.value); this.value='#000000';">
-
-          
-
-          <input type="text" id="docTitle" placeholder="Enter Title">
-          <input type="text" id="docAuthor" placeholder="Enter Author">
-          <button id="resetBtn" title="Reset"><i class='bxr  bx-analyze'  ></i> </button>
-          <button id="previewBtn" title="Preview"><i class='bxr  bx-tv'  ></i> </button>
-          <button id="exportHTML" title="Export HTML"><i class='bxr  bx-folder-code'  ></i> </button>
-          <button id="exportDOCX" title="Export DOCX"><i class='bxr  bx-folder-down-arrow'  ></i> </button>
-          <button id="exportPDF" title="Export PDF"><i class='bxr  bx-file-star'  ></i> </button>
-                    <!-- Find & Replace -->
-          <div id="findReplaceBox">
-            <input type="text" id="findText" placeholder="Find..." />
-            <input type="text" id="replaceText" placeholder="Replace with..." />
-            <button id="findNext">Find</button>
-            <button id="replaceOne">Replace</button>
-            <button id="replaceAll">Replace All</button>
-          </div>
-          <button id="themeToggle">🌙</button>
+            <div id="insertGroup" class="ribbonGroup">
+                <button id="link" title="Insert Link"><i class='bxr  bx-link'  ></i> </button>
+                <button id="unlink" title="unlink"><i class='bx  bx-unlink'  ></i> </button>
+                <input type="file" id="imageUpload" accept="image/*" style="display:none;">
+                <button id="imageLocal" title="Insert Local Image"> <i class='bxr  bx-image-plus'  ></i> </button>
+                <button id="image" title="Insert Image URL"><i class='bxr  bx-image'  ></i></button>
+                <button id="table" title="Insert Table"><i class='bxr  bx-table'  ></i> </button>
+                <button id="newpage">NewPage</button>
+            </div>
+            <div id="findReplaceBox" class="ribbonGroup">
+                <input type="text" id="findText" placeholder="Find..." />
+                <input type="text" id="replaceText" placeholder="Replace with..." />
+                <button id="findNext">Find</button>
+                <button id="replaceOne">Replace</button>
+                <button id="replaceAll">Replace All</button>
+            </div>  
+            </div> 
         </div>
         <div id="funcbody">
             <div id="press" contenteditable="true" ><br></div>
@@ -87,7 +115,7 @@
           </div>
         </div>
     </div>
-
+    
 
     <script src="https://cdn.jsdelivr.net/npm/html-docx-js/dist/html-docx.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>

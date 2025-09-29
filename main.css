@@ -22,7 +22,7 @@ body.dark-mode {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  /* font-family: 'Poppins', sans-serif; */
 }
 
 /* ====== BODY ====== */
@@ -52,7 +52,7 @@ body {
 }
 
 /* ====== TOOLBAR ====== */
-#header {
+/* #header {
   top: 0;
   left: 0;
   width: 100%;
@@ -66,6 +66,62 @@ body {
   align-items: center;
   justify-content: center;
   border: 1px solid #333;
+} */
+
+#header {
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  flex-direction: column; /* stack tabs + ribbon groups */
+  gap: 5px;
+  padding: 5px;
+  background-color: var(--toolbar-bg);
+  color: var(--toolbar-text);
+  border: 1px solid #333;
+}
+
+#ribbonTabs {
+  display: flex;
+  gap: 5px;
+  background-color: #f1f1f1;
+  border-bottom: 1px solid #ccc;
+}
+
+#ribbonTabs button {
+  padding: 10px 15px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+#ribbonTabs button.active {
+  background-color: #f9f9f9;
+  color: black;
+  border-bottom: 2px solid blue;
+}
+
+/* ====== RIBBON GROUPS ====== */
+.ribbonGroup {
+  display: none; /* hidden by default */
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ccc;
+  gap: 5px;
+  flex-wrap: wrap;
+  display: flex; /* JS will toggle display:flex for active */
+}
+
+.ribbonGroup button,
+.ribbonGroup input,
+.ribbonGroup select {
+  margin-right: 5px;
+  padding: 5px 8px;
+  height: 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 #header button,
@@ -137,6 +193,21 @@ body.dark-mode #themeToggle {
   font-size: 16px;
   box-sizing: border-box;
 }
+
+/* #press{
+    background-color: #fff;
+    width: 800px;
+    min-height: 1100px;
+    margin: 20px 0;
+    padding: 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-sizing: border-box;
+    overflow: hidden;
+    page-break-after: always;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+} */
+ 
 
 /* ====== TABLE & IMAGES ====== */
 #press table {
@@ -242,6 +313,34 @@ body.dark-mode #themeToggle {
 #findReplaceBox button:hover {
   background: #0056b3;
 }
+#autosaveStatus {
+    font-size: 14px;
+    color: green;
+    margin-top: 5px;
+    font-family: 'Courier New', Courier, monospace;
+  }
+.img-container {
+  display: inline-block;
+  position: relative;
+  margin: 5px;
+}
+
+.img-container img {
+  max-width: 300px;
+  height: auto;
+  display: block;
+  cursor: move;
+}
+
+.resize-handle {
+  width: 10px;
+  height: 10px;
+  background: #000;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  cursor: se-resize;
+}
 
 /* ====== RESPONSIVE ====== */
 /* @media (max-width: 1024px) {
@@ -285,3 +384,19 @@ body.dark-mode #themeToggle {
     right: 10px;
   }
 } */
+@media print {
+  body * {
+    visibility: hidden; /* hide everything */
+  }
+
+  #press, #press * {
+    visibility: visible; /* show only the editor content */
+  }
+
+  #press {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+}
