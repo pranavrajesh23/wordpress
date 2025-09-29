@@ -334,6 +334,7 @@ class Insert extends Basic {
 
       this.contentDiv.focus();
       document.execCommand("insertHTML", false, table);
+      this.setupresizer(table);
     }
   }
 
@@ -341,29 +342,147 @@ class Insert extends Basic {
   insertImageFromURL() {
     const url = prompt("Enter image URL:");
     if (!url) return;
-    const img = document.createElement("img");
-    img.src = url;
-    img.style.maxWidth = "300px";
-    img.style.height = "auto";
-    this.insertAtCaret(img);
+      this.restoreSelection();
+      document.execCommand("insertImage", false, url);
+      setTimeout(() => this.setupLastInserted("img"), 100);
+    
   }
 
-  // === Insert Image from Local Upload ===
+
   insertImageFromFile(file) {
     if (!file) return;
-
     const reader = new FileReader();
     reader.onload = (e) => {
-      const img = document.createElement("img");
-      img.src = e.target.result;
-      img.style.maxWidth = "50%";
-      img.style.height = "50%";
-      console.log("Inserting image", img.src); 
-      this.insertAtCaret(img);
+      this.restoreSelection();
+      document.execCommand("insertImage", false, e.target.result);
+      setTimeout(() => {
+        this.setupLastInserted("img");
+        //autoPaginate("press"); /* ✅ NEW */
+      }, 100);
     };
     reader.readAsDataURL(file);
   }
 
+  setupLastInserted(tag) {
+    if (!this.contentDiv) return;
+    const elements = this.contentDiv.querySelectorAll(tag);
+    const el = elements[elements.length - 1];
+    if (el) this.setupresizer(el);
+  }
+
+  setupresizer(element) {
+    this.contentDiv.querySelectorAll(".resizing-wrapper").forEach((w) => {
+      if (w !== element.parentNode) {
+        let parent = w.parentNode;
+        while (w.firstChild) parent.insertBefore(w.firstChild, w);
+        parent.removeChild(w);
+      }
+    });
+    if (element.parentNode.classList.contains("resizing-wrapper")) return;
+    const wrapper = document.createElement("div");
+    wrapper.className = "resizing-wrapper";
+    element.parentNode.insertBefore(wrapper, element);
+    wrapper.appendChild(element);
+    ["nw", "ne", "sw", "se", "n", "s", "w", "e"].forEach((pos) => {
+      const handle = document.createElement("div");
+      handle.className = `resizing-handle ${pos}`;
+      wrapper.appendChild(handle);
+    });
+  }
+
+  
+  handleMouseDown = (e) => {
+    let target = e.target;
+    if (this.contentDiv.contains(target) && !target.closest(".resizing-wrapper")) {
+      this.contentDiv.querySelectorAll(".resizing-wrapper").forEach((w) => {
+        let parent = w.parentNode;
+        while (w.firstChild) parent.insertBefore(w.firstChild, w);
+        parent.removeChild(w);
+      });
+    }
+    if (target.tagName === "IMG" || target.tagName === "TABLE") {
+      this.setupresizer(target);
+      return;
+    }
+    if (!target.classList.contains("resizing-handle")) return;
+    e.preventDefault();
+    this.resizer = target.parentNode.querySelector("img, table");
+    if (!this.resizer) return;
+    const rect = this.resizer.getBoundingClientRect();
+    this.startX = e.clientX;
+    this.startY = e.clientY;
+    this.startWidth = this.resizer.offsetWidth;
+    this.startHeight = this.resizer.offsetHeight;
+    this.currentHandle = target.classList[1];
+    document.addEventListener("mousemove", this.handleMouseMove);
+    document.addEventListener("mouseup", this.handleMouseUp);
+  };
+
+  handleMouseMove = (e) => {
+    if (!this.resizer) return;
+    const dx = e.clientX - this.startX;
+    const dy = e.clientY - this.startY;
+    let newWidth = this.startWidth;
+    let newHeight = this.startHeight;
+    switch (this.currentHandle) {
+      case "se":
+        newWidth += dx;
+        newHeight += dy;
+        break;
+      case "sw":
+        newWidth -= dx;
+        newHeight += dy;
+        break;
+      case "ne":
+        newWidth += dx;
+        newHeight -= dy;
+        break;
+      case "nw":
+        newWidth -= dx;
+        newHeight -= dy;
+        break;
+      case "n":
+        newHeight -= dy;
+        break;
+      case "s":
+        newHeight += dy;
+        break;
+      case "w":
+        newWidth -= dx;
+        break;
+      case "e":
+        newWidth += dx;
+        break;
+    }
+    if (newWidth < 50) newWidth = 50;
+    if (newHeight < 30) newHeight = 30;
+    this.resizer.style.width = `${newWidth}px`;
+    this.resizer.style.height = `${newHeight}px`;
+  };
+
+  handleMouseUp = () => {
+    this.resizer = null;
+    document.removeEventListener("mousemove", this.handleMouseMove);
+    document.removeEventListener("mouseup", this.handleMouseUp);
+  };
+
+  bindResizing() {
+    this.contentDiv.addEventListener("mousedown", this.handleMouseDown);
+    this.contentDiv.addEventListener("click", (e) => {
+      if ((e.target.tagName === "IMG" || e.target.tagName === "TABLE") && !e.target.parentNode.classList.contains("resizing-wrapper")) {
+        this.setupresizer(e.target);
+      }
+    });
+    document.addEventListener("mousedown", (e) => {
+      if (!this.contentDiv.contains(e.target) && !e.target.closest(".resizing-wrapper")) {
+        this.contentDiv.querySelectorAll(".resizing-wrapper").forEach((w) => {
+          let parent = w.parentNode;
+          while (w.firstChild) parent.insertBefore(w.firstChild, w);
+          parent.removeChild(w);
+        });
+      }
+    });
+  }
   // === Helper: Insert Node at Caret ===
   insertAtCaret(node) {
     this.contentDiv.focus();
@@ -480,7 +599,7 @@ const insertTools = new Insert(
   "imageLocal",   // local image button
   "imageUpload"   // hidden file input
 );
-
+insertTools.bindResizing()
 // Usage
 const findReplace = new FindReplace(
   "docTitle",    // title input

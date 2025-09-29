@@ -234,6 +234,43 @@ body.dark-mode #themeToggle {
   outline: none !important;
 }
 
+.resizing-wrapper {
+  position: relative;
+  display: inline-block;
+  box-shadow: 0 0 0 2px #3399ff;
+  cursor: grab;
+  user-select: none;
+}
+
+.resizing-wrapper img,
+.resizing-wrapper table {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.resizing-handle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #3399ff;
+  border: 2px solid white;
+  border-radius: 50%;
+  z-index: 2000;
+  display: none;
+}
+
+.resizing-wrapper:hover .resizing-handle { display: block; }
+
+.resizing-handle.nw { cursor: nwse-resize; top: -5px; left: -5px; }
+.resizing-handle.ne { cursor: nesw-resize; top: -5px; right: -5px; }
+.resizing-handle.sw { cursor: nesw-resize; bottom: -5px; left: -5px; }
+.resizing-handle.se { cursor: nwse-resize; bottom: -5px; right: -5px; }
+.resizing-handle.n { cursor: ns-resize; top: -5px; left: 50%; transform: translateX(-50%); }
+.resizing-handle.s { cursor: ns-resize; bottom: -5px; left: 50%; transform: translateX(-50%); }
+.resizing-handle.w { cursor: ew-resize; left: -5px; top: 50%; transform: translateY(-50%); }
+.resizing-handle.e { cursor: ew-resize; right: -5px; top: 50%; transform: translateY(-50%); }
+
 /* ====== PREVIEW MODAL ====== */
 #previewModal {
   display: none;
