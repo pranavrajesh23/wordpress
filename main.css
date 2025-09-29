@@ -172,15 +172,15 @@ body.dark-mode #themeToggle {
 }
 
 /* ====== EDITOR AREA ====== */
-#funcbody {
+/* #funcbody {
   width: 100%;
   height: calc(100vh - 60px);
   display: flex;
   justify-content: center;
   overflow-y: auto; /* scrollable container */
-  border: 1px solid #333;
-}
-
+  /* border: 1px solid #333;
+} */
+/*
 #press {
   width: 80%;
   min-height: 400px;
@@ -192,6 +192,32 @@ body.dark-mode #themeToggle {
   white-space: pre-wrap;
   font-size: 16px;
   box-sizing: border-box;
+} */
+
+#funcbody {
+    width: 100%;
+    flex: 1;                  /* fill remaining space below header */
+    display: flex;
+    flex-direction: column;   /* stack pages vertically */
+    align-items: center;      /* center pages horizontally */
+    overflow-y: auto;         /* allow scrolling */
+    padding: 20px 0;
+    background: #ccc;         /* optional background behind pages */
+}
+#press {
+    width: 210mm;            
+    min-height: 297mm;        
+    max-height: 297mm;
+    background-color: var(--bg);
+    color: var(--text);
+    padding: 20mm;
+    margin: 10px 0;           
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    box-sizing: border-box;
+    overflow: hidden;         
+    white-space: pre-wrap;
+    font-size: 16px;
+    page-break-after: always; 
 }
 
 /* Zoom container */
