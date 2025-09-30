@@ -856,3 +856,4 @@ zoomSlider.addEventListener("input", () => {
 
     zoomValue.textContent = zoomPercent + "%";
 });
+
